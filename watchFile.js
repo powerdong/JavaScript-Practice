@@ -30,11 +30,11 @@ const getFileName = (filePath) => {
 const isInFile = (filename) => {
   fs.stat(filename, (_err, stat) => {
     if (_err) {
-      console.log('当前没文件')
+      console.log(`当前没${filename}文件`)
       addFile(filename)
       return false
     } else if (stat && stat.isFile()) {
-      console.log('当前有文件')
+      console.log(`当前有${filename}文件`)
       // delFile(filename)
       return true
     }
@@ -58,7 +58,7 @@ const addFileFn = (name) => {
 const addFile = (filename) => {
   fs.appendFile(filename, '', (err) => {
     if (err) throw err
-    console.log('已添加文件')
+    console.log(`已添加${filename}文件`)
   })
 }
 
