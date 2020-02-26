@@ -1,47 +1,22 @@
-## 问题修复
+/*
+ * @lc app=leetcode.cn id=85 lang=javascript
+ *
+ * [85] 最大矩形
+ */
 
-### 卡牌分组问题修复
-
-```js
-export default function cardGroup (arr) {
-  // 将卡牌按值排序保证相同的卡牌是挨着的
-  let str = arr.sort((a, b) => a - b).join('')
-  // 分组(单张或者多张)
-  let group = str.match(/(\d)\1+|\d/g)
-  // 求两个数的最大公约数
-  let gcd = (a, b) => {
-    if (b === 0) {
-      return a
-    } else {
-      return gcd(b, a % b)
-    }
+// @lc code=start
+/**
+ * @param {character[][]} matrix
+ * @return {number}
+ */
+var maximalRectangle = function (matrix) {
+  if (!matrix.length) {
+    return 0
   }
-  // 思想：只要所有的分组具有最大公约数(大于1)就满足条件
-  // 对所有的分组进行最大公约数验证，相邻两个分组的最大公约数，再与后面的公约数进行验证，以此类推，有一个最大公约数为1就退出
-  while (group.length > 1) {
-    let a = group.shift().length
-    let b = group.shift().length
-    let v = gcd(a, b)
-    if (v === 1) {
-      return false
-    } else {
-      // 将前两个分组的最大公约数推进数组与下一个分组再次验证是否有最大公约数
-      group.unshift('0'.repeat(v))
-    }
-  }
-  // 考虑边界['11']即只有一个分组的时候
-  return group.length ? group[0].length > 1 : false
-}
-```
-
-### 最大矩阵
-
-```js
-export default function rectangle (arr) {
   let result = []
   let reg = /1{2,}/g
   // 把每一行连续的1挑选出来，并记录好起始点和截止点
-  arr = arr.map(item => {
+  matrix = matrix.map(item => {
     let str = item.join('')
     let r = reg.exec(str)
     let rs = []
@@ -51,10 +26,10 @@ export default function rectangle (arr) {
     }
     return rs
   })
-
-  let maxRect = (arr, result = [], n = 1) => {
-    let top = arr.pop()
-    let next = arr.pop()
+  console.log(matrix)
+  let maxRect = (matrix, result = [], n = 1) => {
+    let top = matrix.pop()
+    let next = matrix.pop()
     let tt
     let nn
     let start
@@ -90,11 +65,11 @@ export default function rectangle (arr) {
       }
     } else {
       // 找到交叉点继续下一行
-      if (arr.length > 0) {
-        arr.push([
+      if (matrix.length > 0) {
+        matrix.push([
           [start, end]
         ])
-        maxRect(arr, result, n++)
+        maxRect(matrix, result, n++)
       } else {
         // 从某一行一直计算到最后一行，这个时候start和end一直有值，所以不会进入到if层，这个时候n就是累计的行数（高），end-start+1就是宽
         result.push(n * (end - start + 1))
@@ -102,12 +77,12 @@ export default function rectangle (arr) {
     }
   }
   // 每一次寻找最大矩形，找不到交叉点就结束了
-  while (arr.length > 1) {
-    maxRect([].concat(arr), result)
-    arr.pop()
+  while (matrix.length > 1) {
+    maxRect([].concat(matrix), result)
+    matrix.pop()
   }
-  // 为什么有这一行，理论上arr已经为1行了
-  // maxRect(arr, result)
+  // 为什么有这一行，理论上matrix已经为1行了
+  // maxRect(matrix, result)
 
   let max = 0
   let item = result.pop()
@@ -119,5 +94,5 @@ export default function rectangle (arr) {
   }
   return max > 0 ? max : -1
 }
-
-```
+maximalRectangle([['0']])
+// @lc code=end
