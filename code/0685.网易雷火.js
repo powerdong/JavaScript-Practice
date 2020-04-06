@@ -1,12 +1,18 @@
+/*
+ * @Author: Lambda
+ * @Begin: 2020-04-05 17:07:54
+ * @Update: 2020-04-05 19:40:04
+ * @Update log: 更新日志
+ */
 /**
-* 
+*
 * @param {Array} nums int整型一维数组 长度大于5且小于10
 * @param {Number} target int整型
 * @return int整型二维数组
 */
-function findNumber (nums ,  target ) {
+function findNumber (nums, target) {
   // write code here
-  if (nums.length < 5 || nums.length > 10 ) {
+  if (nums.length < 5 || nums.length > 10) {
     return false
   }
   const array = nums.slice()
@@ -39,18 +45,18 @@ function findNumber (nums ,  target ) {
       }
     }
   }
-  console.log('result: ', result);
+  console.log('result: ', result)
   return result
 }
 
-findNumber([5,0,-6,0,6,-5],0)
+findNumber([5, 0, -6, 0, 6, -5], 0)
 // module.exports = {
 //   findNumber: findNumber
 // }
 
 function find1 (nums, target) {
   let result = []
-  if (nums.length < 5 || nums.length > 10 ) {
+  if (nums.length < 5 || nums.length > 10) {
     return result
   }
   const array = nums.slice()
@@ -93,3 +99,5 @@ function find1 (nums, target) {
   console.log('result: ', result)
   return result
 }
+
+find1([1, 2, 3, 4], 4)

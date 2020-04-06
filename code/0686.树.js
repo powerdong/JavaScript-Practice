@@ -95,7 +95,10 @@ class TwoForkTree {
    * @param {Array} ldr 中序遍历
    */
   getTree (dlr, ldr) {
+    console.log('dlr, ldr: ', dlr, ldr)
     if (dlr.length !== ldr.length) {
+      console.log('ldr.length: ', ldr.length)
+      console.log('dlr.length: ', dlr.length)
       throw new Error('无解')
     }
     if (dlr.length === 0) {
@@ -255,11 +258,11 @@ leftSon1.left = leftGrandSonLeft1
 leftSon1.right = leftGrandSonRight1
 rightSon1.left = rightGrandSonLeft1
 
-console.log('root.DLR(root): ', root.DLR(root))
-console.log('root.LDR(root): ', root.LDR(root))
-console.log('root.LRD(root): ', root.LRD(root))
-console.log('root.getTree(root): ', root.getTree(root.DLR(root), root.LDR(root)))
-console.log('root.getDepth(root): ', root.getDepth(root))
-console.log('root.searchDeep(root): ', root.searchDeep(root, 'B'))
-console.log('root.searchWide(root): ', root.searchWide(root, 'F'))
-console.log('root.diff(root): ', root.diff(root, root1))
+// console.log('root.DLR(root): ', root.DLR(root))
+// console.log('root.LDR(root): ', root.LDR(root))
+// console.log('root.LRD(root): ', root.LRD(root))
+console.log('root.getTree(root): ', root.getTree([1, 2, 4, 7, 3, 5, 6, 8], [4, 7, 2, 1, 5, 3, 8, 6]))
+// console.log('root.getDepth(root): ', root.getDepth(root))
+// console.log('root.searchDeep(root): ', root.searchDeep(root, 'B'))
+// console.log('root.searchWide(root): ', root.searchWide(root, 'F'))
+// console.log('root.diff(root): ', root.diff(root, root1))
