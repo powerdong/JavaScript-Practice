@@ -32,4 +32,4 @@ function exchange (total, smallChangeArr) {
 }
 
 exchange(51, [30, 25, 10, 5, 1])
-console.log('exchange(51, [30, 25, 10, 5, 1]): ', exchange(51, [30, 25, 10, 5, 1]));
+console.log('exchange(51, [30, 25, 10, 5, 1]): ', exchange(51, [30, 25, 10, 5, 1]))
