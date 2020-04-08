@@ -201,8 +201,8 @@ class DoublyLinkedList extends LinkedList {
   /**
    * 插入一个新元素
    * 双向链表需要同时控制 next 和 prev 这两个指针
-   * @param {*} element 
-   * @param {*} index 
+   * @param {any} element
+   * @param {Number} index
    */
   insert (element, index) {
     if (index >= 0 && index <= this.count) {
@@ -240,7 +240,7 @@ class DoublyLinkedList extends LinkedList {
   /**
    * 从任意位置移除元素
    * 还需要设置前一个位置的指针
-   * @param {*} index 某一位置索引
+   * @param {Number} index 某一位置索引
    */
   removeAt (index) {
     if (index >= 0 && index < this.count) {
@@ -272,4 +272,137 @@ class DoublyLinkedList extends LinkedList {
   }
 }
 
-module.exports = { LinkedList, DoublyLinkedList }
+/**
+ * 循环链表
+ * 循环链表可以像链表一样只有单向引用，也可以像双向链表一样有双向引用
+ * 循环链表和链表之间唯一的区别在于，最后一个元素指向下一个元素的指针，不是引用 undefined，而是指向第一个元素(head)
+ * 双向循环链表有指向 head 元素的 tail.next 和指向 tail 元素的 head.prev
+ */
+class CircularLinkedList extends LinkedList {
+  constructor (equalsFn = defaultEquals) {
+    super(equalsFn)
+  }
+  /**
+   * 向循环链表插入元素的逻辑和向普通链表中插入元素的逻辑是不一样的。
+   * 不同之处在于我们需要将循环链表尾部节点的 next 引用指向头部节点
+   * @param {any} element 新元素
+   * @param {Number} index 插入索引
+   */
+  insert (element, index) {
+    if (index >= 0 && index <= this.count) {
+      const node = new Node(element)
+      let current = this.head
+      if (index === 0) {
+        // 想在循环链表第一个位置插入新元素
+        if (this.head == null) {
+          // 如果循环链表为空
+          this.head = node
+          // 循环
+          node.next = this.head
+        } else {
+          // 非空循环链表的第一个位置插入元素
+          node.next = current // node.next 指向现在的 head 引用的节点
+          current = this.getElementAt(this.size()) // 保证最后一个节点指向这个新的头部元素
+          // 更新最后一个元素
+          this.head = node
+          current.next = this.head
+        }
+      } else {
+        const previous = this.getElementAt(index - 1)
+        node.next = previous.next
+        previous.next = node
+      }
+      this.count++
+      return true
+    }
+    return false
+  }
+  /**
+   * 从循环链表中移除元素
+   * !: 修改循环链表的 head 元素
+   * @param {Number} index 删除索引
+   */
+  removeAt (index) {
+    if (index >= 0 && index < this.count) {
+      let current = this.head
+      if (index === 0) {
+        if (this.size() === 1) {
+          // 从只有一个元素的循环链表中移除一个元素
+          this.head = undefined
+        } else {
+          // 从非空循环链表中移除第一个元素
+          const removed = this.head
+          current = this.getElementAt(this.size())
+          this.head = this.head.next
+          // 由于 head 会变，我们需要修改最后一个节点的 next 属性
+          current.next = this.head
+          current = removed
+        }
+      } else {
+        // 不需要修改循环链表最后一个元素
+        const previous = this.getElementAt(index - 1)
+        current = previous.next
+        previous.next = current.next
+      }
+      this.count--
+      return current.element
+    }
+    return undefined
+  }
+}
+
+const Compare = {
+  LESS_THAN: -1,
+  BIGGER_THAN: 1
+}
+
+function defaultCompare (a, b) {
+  if (a === b) {
+    // 如果元素有相同的引用
+    return 0
+  }
+  return a < b ? Compare.LESS_THAN : Compare.BIGGER_THAN
+}
+
+/**
+ * 有序链表
+ * 保持元素有序的链表结构
+ * 除了使用排序算法之外，我们还可以将元素插入到正确的位置来保证链表的有序性
+ */
+class SortedLinkedList extends LinkedList {
+  constructor (equalsFn = defaultEquals, compareFn = defaultCompare) {
+    super(equalsFn)
+    this.compareFn = compareFn
+  }
+  /**
+   * 有序插入元素
+   * @param {any} element 新元素
+   * @param {Number} index 插入位置
+   */
+  insert (element, index = 0) {
+    if (this.isEmpty()) {
+      return super.insert(element, index)
+    }
+    const pos = this.getIndexNextSortedElement(element)
+    return super.insert(element, pos)
+  }
+  /**
+   * 获取插入元素的正确位置
+   * @param {*} element 元素
+   */
+  getIndexNextSortedElement (element) {
+    let current = this.head
+    let i = 0
+    // 迭代整个有序链表知道找到需要插入元素的位置，伙食迭代完所有的元素
+    for (; i < this.size() && current; i++) {
+      const comp = this.compareFn(element, current.element)
+      if (comp === Compare.LESS_THAN) {
+        return i
+      }
+      current = current.next
+    }
+    return i
+  }
+}
+
+module.exports = { LinkedList, DoublyLinkedList, CircularLinkedList, SortedLinkedList }

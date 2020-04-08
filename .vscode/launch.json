@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\剑指offer\\7.斐波那契数列.js"
+      "program": "${workspaceFolder}\\code\\0696.网易.js"
     }
   ]
 }
