@@ -11,8 +11,8 @@
 const fs = require('fs')
 const path = require('path')
 
-const codePath = path.join(__dirname, 'code')
-const testPath = path.join(__dirname, 'test')
+const codePath = path.join(__dirname, 'LeetCode-code')
+const testPath = path.join(__dirname, 'LeetCode-test')
 
 /**
  * 根据题目名称提取出题目序号

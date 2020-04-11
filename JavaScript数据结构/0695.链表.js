@@ -7,6 +7,8 @@
  *
  * 相对于传统数组，链表的一个好处在于，添加说移除元素的时候不需要移动其他元素
  * 在数组中，我们可以直接访问任何位置的任何元素，而要想访问链表中间的一个元素，则需要从起点(表头)开始迭代链表知道找到所需元素
+ *
+ * !: 当需要添加和移除很多元素时，最好的选择就是链表，而非数组
  */
 
 const { defaultEquals } = require('./utils/utils')
@@ -405,4 +407,45 @@ class SortedLinkedList extends LinkedList {
   }
 }
 
-module.exports = { LinkedList, DoublyLinkedList, CircularLinkedList, SortedLinkedList }
+/**
+ * 创建栈数据结构
+ */
+class StackLinkedList {
+  constructor () {
+    // 之所以使用双向链表而不是链表，是因为对栈来说，我们会向链表尾部添加元素，也会从链表尾部移除元素
+    this.items = new DoublyLinkedList()
+  }
+  /**
+   * 添加一个元素
+   * @param {*} element 新元素
+   */
+  push (element) {
+    this.items.push(element)
+  }
+  pop () {
+    if (this.isEmpty()) {
+      return undefined
+    }
+    return this.items.removeAt(this.size() - 1)
+  }
+  peek () {
+    if (this.isEmpty()) {
+      return undefined
+    }
+    return this.items.getElementAt(this.size() - 1).element
+  }
+  isEmpty () {
+    return this.items.size()
+  }
+  size () {
+    return this.items.size()
+  }
+  clear () {
+    this.items.clear()
+  }
+  toString () {
+    return this.items.toString()
+  }
+}
+
+module.exports = { LinkedList, DoublyLinkedList, CircularLinkedList, SortedLinkedList, StackLinkedList }
