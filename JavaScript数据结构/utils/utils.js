@@ -17,7 +17,24 @@ const defaultToString = (item) => {
   return item.toString()
 }
 
+
+const Compare = {
+  LESS_THAN: -1,
+  BIGGER_THAN: 1
+}
+
+const defaultCompare = (a, b) => {
+  if (a === b) {
+    // 如果元素有相同的引用
+    return 0
+  }
+  return a < b ? Compare.LESS_THAN : Compare.BIGGER_THAN
+}
+
+
 module.exports = {
   defaultEquals,
-  defaultToString
+  defaultToString,
+  defaultCompare,
+  Compare
 }

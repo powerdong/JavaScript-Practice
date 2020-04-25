@@ -200,3 +200,132 @@ class HashTableSeparateChaining extends HashTable {
     return false
   }
 }
+
+/**
+ * 线性探查
+ * 之所以称作线性，是因为它处理冲突得方法是将元素直接存储到表中，而不是在单独的数据结构中
+ * 
+ * 线性探查技术分为两种，第一种是软删除方法。我们使用一个特殊的值(标记)来表示键值对被删除了(惰性删除或软删除)，而不是真的删除它。
+ */
+
+class LinearDeletion extends HashTable {
+  constructor (toStrFn = defaultToString) {
+    super()
+    this.toStrFn = toStrFn
+    this.table = {}
+  }
+  put (key, value) {
+    if (key != null && value != null) {
+      // 先获得由散列函数生成的位置
+      const position = this.hashCode(key)
+      // 然后验证这个位置是否有元素存在
+      if (this.table[position] == null) {
+        // 如果没有元素存在(这是最简单的场景)，就在这个位置添加新元素：一个ValuePair的实例
+        this.table[position] = new ValuePair(key, value)
+      } else {
+        // 如果该位置已经被占据，需要找到下一个没有被占据的位置(position 的值是 undefined 或 null)，因此我们声明一个 index 变量并赋值为 position + 1
+        let index = position + 1
+        // 然后验证该位置是否被占据，如果被占据，继续将 index 递增，直到找到一个没有被占据的位置
+        while (this.table[index] != null) {
+          index++
+        }
+        // 然后我们要做的就是将值分配到该位置
+        this.table[index] = new ValuePair(key, value)
+      }
+      return true
+    }
+    return false
+  }
+  get  (key) {
+    const position = this.hashCode(key)
+    // 要获得一个键对应的值，先要确定这个键的存在
+    if (this.table[position] != null) {
+      // 如果这个键存在，需要检查我们要找的值是否就是原始位置上的值
+      if (this.table[position].key === key) {
+        // 如果是，就返回这个值
+        return this.table[position].value
+      }
+      // 如果不是，就在下一个位置继续查找
+      let index = position + 1
+      // 我们按照位置递增的顺序查找散列表上的元素直到找到我们要找的元素，或者找到一个空位置
+      while (this.table[index] != null && this.table[index].key !== key) {
+        index++
+      }
+      // 当从 while 循环跳出的时候，我们要验证元素的键是否是我们要找的键
+      if (this.table[index] != null && this.table[index].key === key) {
+        // 如果是，就返回它的值
+        return this.table[position].value
+      }
+      // 如果迭代完整个散列表，并且 index 的位置上是 undefined 或 null 的话，说明要找的键不存在，返回 undefined
+    }
+    // 如果这个键不存在，说明要查找的值不在散列表中，因此可以返回 undefined
+    return undefined
+  }
+  remove (key) {
+    const position = this.hashCode(key)
+    if (this.table[position] != null) {
+      delete this.table[position]
+      // 由于我们不知道在散列表的不同位置上是否存在具有相同 hash 的元素，需要验证删除操作是否有副作用
+      // 如果有，就需要将冲突的元素移动至一个之前的位置，这样就不会产生空位置
+      this.verifyRemoveSideEffect(key, position)
+      return true
+    }
+    let index = position
+    while (this.table[index] != null && this.table[index].key !== key) {
+      index++
+    }
+    if (this.table[index] != null && this.table[index].key === key) {
+      delete this.table[index]
+      this.verifyRemoveSideEffect(key, index)
+      return true
+    }
+    return false
+  }
+  /**
+   * 接受两个参数
+   * @param {String} key 被删除的 key
+   * @param {Number} removedPosition 该 key 被删除的位置
+   */
+  verifyRemoveSideEffect (key, removedPosition) {
+    // 首先我们要获取被删除的 key 的 hash 值
+    const hash = this.hashCode(key)
+    let index = removedPosition + 1
+    // 然后，我们从下一个位置开始迭代散列表，直到找到一个空位置
+    while (this.table[index] != null) {
+      // 当空位置被找到后，表示元素都在合适的位置上，不需要进行移动
+      const posHash = this.hashCode(this.table[index].key)
+      if (posHash <= hash || posHash <= removedPosition) {
+        // 如果当前元素的 hash 值小于或等于原始 hash 值或者当前元素的 hash 值小于或等于 removedPosition 的位置
+        this.table[removedPosition] = this.table[index]
+        // 移动完成后，我们可以删除当前的元素
+        delete this.table[index]
+        removedPosition = index
+      }
+      index++
+    }
+  }
+}
+
+// =======================================================
+/**
+ * ES6 新增了 Map 类，可以基于 ES6 的 Map 类开发我们的 Dictionary 类
+ */
+
+const map = new Map()
+
+map.set('Gandalf', 'gandalf@email.com')
+map.set('John', 'john@email.com')
+map.set('Torino', 'torino@email.com')
+
+console.log(map.has('Gandalf')) // true
+console.log(map.size); // 3
+console.log(map.keys()); // MapIterator { 'Gandalf', 'John', 'Torino' }
+console.log(map.values()); // MapIterator { 'gandalf@email.com', 'john@email.com', 'torino@email.com' }
+console.log(map.get('Gandalf')); // gandalf@email.com
+
+// 删除 map 中的元素可以用 delete 方法
+map.delete('John')
+
+
+
+

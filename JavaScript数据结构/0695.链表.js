@@ -11,8 +11,10 @@
  * !: 当需要添加和移除很多元素时，最好的选择就是链表，而非数组
  */
 
-const { defaultEquals } = require('./utils/utils')
+const { defaultEquals, defaultCompare, Compare } = require('./utils/utils')
+console.log('defaultEquals: ', defaultEquals);
 const { Node } = require('./models/linked-list-models')
+
 
 class LinkedList {
   constructor (equalsFn = defaultEquals) {
@@ -187,6 +189,7 @@ class LinkedList {
  * !: 在单向链表中，如果迭代时错过了要找的元素，就需要回到起点，重新开始迭代。这是双向链表的一个优势
  */
 
+console.log('Node: ', Node);
 class DoublyNode extends Node {
   constructor (element, next, prev) {
     super(element, next)
@@ -351,19 +354,6 @@ class CircularLinkedList extends LinkedList {
     }
     return undefined
   }
-}
-
-const Compare = {
-  LESS_THAN: -1,
-  BIGGER_THAN: 1
-}
-
-function defaultCompare (a, b) {
-  if (a === b) {
-    // 如果元素有相同的引用
-    return 0
-  }
-  return a < b ? Compare.LESS_THAN : Compare.BIGGER_THAN
 }
 
 /**
