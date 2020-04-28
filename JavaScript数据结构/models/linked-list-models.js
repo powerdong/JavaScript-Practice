@@ -1,3 +1,5 @@
+const { Colors } = require('../utils/utils');
+
 class Node {
   constructor (element) {
     this.element = element
@@ -13,7 +15,19 @@ class TreeNode {
   }
 }
 
+class RedBlackNode extends Node {
+  constructor(key) {
+    super(key)
+    this.key = key
+    this.color = Colors.RED
+  }
+  isRed() {
+    return this.color === Colors.RED
+  }
+}
+
 module.exports = {
   Node,
-  TreeNode
+  TreeNode,
+  RedBlackNode
 }

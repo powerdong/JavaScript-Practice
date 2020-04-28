@@ -23,6 +23,14 @@ const Compare = {
   BIGGER_THAN: 1
 }
 
+const BalanceFactor = {
+  UNBALANCED_RIGHT: 1,
+  SLIGHTLY_UNBALANCED_RIGHT: 2,
+  BALANCED: 3,
+  SLIGHTLY_UNBALANCED_LEFT: 4,
+  UNBALANCED_LEFT: 5
+}
+
 const defaultCompare = (a, b) => {
   if (a === b) {
     // 如果元素有相同的引用
@@ -31,10 +39,17 @@ const defaultCompare = (a, b) => {
   return a < b ? Compare.LESS_THAN : Compare.BIGGER_THAN
 }
 
+const Colors = {
+  RED: 'red',
+  BLACK: 'black'
+}
+
 
 module.exports = {
   defaultEquals,
   defaultToString,
   defaultCompare,
-  Compare
+  Compare,
+  BalanceFactor,
+  Colors
 }
