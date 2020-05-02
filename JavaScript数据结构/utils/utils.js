@@ -1,10 +1,24 @@
 /*
- * @Author: Lambda
- * @Begin: 2020-04-08 14:19:37
- * @Update: 2020-04-12 11:00:30
- * @Update log: 更新日志
+ * @Author lihaodong
+ * @Date 2020/04/13
+ * @TODO TODO
+ */
+/**
+ * 比较两个元素是否相等
+ * @param {any} a 元素
+ * @param {any} b 元素
  */
 const defaultEquals = (a, b) => a === b
+
+/**
+ * 交换数组中两个元素的位置
+ * @param {Array} arr 数组
+ * @param {Number} i1 索引
+ * @param {Number} i2 索引
+ */
+const swap = (arr, i1, i2) => {
+  [arr[i1], arr[i2]] = [arr[i2], arr[i1]]
+}
 
 const defaultToString = (item) => {
   if (item === null) {
@@ -51,5 +65,6 @@ module.exports = {
   defaultCompare,
   Compare,
   BalanceFactor,
-  Colors
+  Colors,
+  swap
 }
