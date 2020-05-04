@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\JavaScript数据结构\\0697.字典.js"
+      "program": "${workspaceFolder}\/JavaScript数据结构\/0707.图.Kruska.js"
     }
   ]
 }

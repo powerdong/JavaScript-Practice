@@ -14,6 +14,9 @@
  * TODO: 在电影院、自助餐厅、杂货店收银台，我们都会排队。排在第一位的人会先接受服务
  */
 
+/**
+ * 队列
+ */
 class Queue {
   constructor () {
     // 声明 count 属性来帮助我们控制队列的大小
@@ -107,4 +110,4 @@ queue.dequeue() // 移除 Lambda
 queue.dequeue() // 移除 LHD
 console.log(queue.toString()) // powerdong
 
-module.exports = Queue
+module.exports = { Queue }

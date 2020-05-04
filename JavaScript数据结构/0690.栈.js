@@ -71,3 +71,7 @@ stack.push(15)
 stack.pop()
 stack.pop()
 console.log(stack.size()) // 2
+
+module.exports = {
+  Stack
+}

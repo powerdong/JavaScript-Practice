@@ -209,3 +209,8 @@ dictionary.forEach((k, v) => {
 })
 // forEach: key: Gandalf, value: gandalf@email.com
 // forEach: key: Tyrian, value: tyrian@email.com
+
+
+module.exports = {
+  Dictionary
+}

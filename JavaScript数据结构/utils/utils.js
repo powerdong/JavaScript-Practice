@@ -58,6 +58,19 @@ const Colors = {
   BLACK: 'black'
 }
 
+const GraphColors = {
+  WHITE: 0,
+  GREY: 1,
+  BLACK: 2
+}
+
+const initializeColor = vertices => {
+  const color = {}
+  for (let i = 0; i < vertices.length; i++) {
+    color[vertices[i]] = GraphColors.WHITE
+  }
+  return color
+}
 
 module.exports = {
   defaultEquals,
@@ -66,5 +79,7 @@ module.exports = {
   Compare,
   BalanceFactor,
   Colors,
-  swap
+  swap,
+  GraphColors,
+  initializeColor
 }
