@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\/JavaScript数据结构\/0707.图.Kruska.js"
+      "program": "${workspaceFolder}\/JavaScript数据结构\/0708.排序和搜索算法.js"
     }
   ]
 }
