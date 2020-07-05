@@ -29,5 +29,5 @@ var isMatch = function (s, p) {
     return firstMatch && isMatch(s.substring(1), p.substring(1))
   }
 }
-// export default isMatch
+export default isMatch
 // @lc code=end

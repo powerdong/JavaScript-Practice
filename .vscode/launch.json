@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\/JavaScript数据结构\/0709.算法设计与技巧.js"
+      "program": "${workspaceFolder}\/Leetcode-code\/38.外观数列.js"
     }
   ]
 }

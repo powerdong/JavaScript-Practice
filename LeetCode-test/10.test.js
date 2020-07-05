@@ -1,4 +1,4 @@
-import isMatch from '../code/10.正则表达式匹配'
+import isMatch from '../LeetCode-code/10.正则表达式匹配'
 
 test('isMatch:', () => {
   expect(isMatch('aaaabc', '.*bc')).toBe(true)

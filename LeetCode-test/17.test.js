@@ -1,4 +1,4 @@
-import letterCombinations from '../code/17.电话号码的字母组合'
+import letterCombinations from '../LeetCode-code/17.电话号码的字母组合'
 
 const inText = '23'
 const outText = ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']

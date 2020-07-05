@@ -1,4 +1,4 @@
-import hasGroupsSizeX from '../code/914.卡牌分组'
+import hasGroupsSizeX from '../LeetCode-code/914.卡牌分组'
 
 test('has groups size x: [1,2,3,4,4,3,2,1]', () => {
   expect(hasGroupsSizeX([1, 2, 3, 4, 4, 3, 2, 1])).toBe(true)
